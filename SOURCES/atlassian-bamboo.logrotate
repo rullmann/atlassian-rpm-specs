@@ -1,0 +1,8 @@
+/opt/bamboo/logs/catalina.out {
+    size +10M
+    missingok
+    rotate 10
+    copytruncate
+    compress
+    notifempty
+}

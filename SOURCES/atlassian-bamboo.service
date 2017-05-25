@@ -1,0 +1,13 @@
+[Unit] 
+Description=Atlassian Bamboo
+After=network.target
+
+[Service] 
+Type=forking
+User=bamboo
+PIDFile=/opt/bamboo/work/catalina.pid
+ExecStart=/opt/bamboo/bin/start-bamboo.sh
+ExecStop=/opt/bamboo/bin/stop-bamboo.sh
+
+[Install] 
+WantedBy=multi-user.target 
