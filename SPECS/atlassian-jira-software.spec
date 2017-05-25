@@ -33,10 +33,11 @@ install -d -m 755 %{buildroot}/%{jira_home}/
 install -d -m 755 %{buildroot}/%{jira_user_home}/
 cp -R * %{buildroot}/%{jira_home}/
 
-# Remove windows bat and exe files
+# Remove # Remove useless executable files
 rm -f %{buildroot}/%{jira_home}/bin/*.bat
 rm -f %{buildroot}/%{jira_home}/bin/*.exe
 rm -f %{buildroot}/%{jira_home}/bin/*.exe.x64
+rm -rf %{buildroot}/%{jira_home}/bin/apr
 
 # Remove the 'safeToDelete.tmp'
 rm -f %{buildroot}/%{jira_home}/temp/safeToDelete.tmp
