@@ -47,6 +47,7 @@ rm -f %{buildroot}/%{confluence_home}/NOTICE
 rm -f %{buildroot}/%{confluence_home}/RELEASE-NOTES
 rm -f %{buildroot}/%{confluence_home}/RUNNING.txt
 rm -f %{buildroot}/%{confluence_home}/README.*
+rm -rf %{buildroot}/%{confluence_home}/licenses
 
 # systemd service
 install -d -m 755 %{buildroot}/%{systemd_dir}
