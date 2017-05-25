@@ -36,6 +36,7 @@ cp -R * %{buildroot}/%{confluence_home}/
 # Remove windows bat and exe files
 rm -f %{buildroot}/%{confluence_home}/bin/*.bat
 rm -f %{buildroot}/%{confluence_home}/bin/*.exe
+rm -f %{buildroot}/%{confluence_home}/bin/*.exe.x64
 
 # Remove the 'safeToDelete.tmp'
 rm -f %{buildroot}/%{confluence_home}/temp/safeToDelete.tmp
