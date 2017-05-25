@@ -18,6 +18,7 @@ URL:        https://www.atlassian.com/software/confluence
 Source0:    atlassian-confluence-%{version}.tar.gz
 Source1:    %{name}.service
 Source2:    %{name}.logrotate
+Source3:    confluence-init.properties
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
@@ -58,6 +59,9 @@ install    -m 644 %_sourcedir/%{name}.service %{buildroot}/%{systemd_dir}/%{name
 # logrotate script
 install -d -m 755 %{buildroot}/%{logrotate_dir}/logrotate.d
 install    -m 644 %_sourcedir/%{name}.logrotate %{buildroot}/%{logrotate_dir}/%{name}.conf
+
+# set data directory
+install    -m 644 %_sourcedir/confluence-init.properties %{buildroot}/%{confluence_home}/confluence/WEB-INF/classes/confluence-init.properties
 
 %clean
 rm -rf %{buildroot}
