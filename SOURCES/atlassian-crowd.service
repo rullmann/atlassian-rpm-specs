@@ -1,0 +1,13 @@
+[Unit] 
+Description=Atlassian Crowd
+After=network.target
+
+[Service] 
+Type=forking
+User=crowd
+PIDFile=/opt/crowd/apache-tomcat/work/catalina.pid
+ExecStart=/opt/crowd/start_crowd.sh
+ExecStop=/opt/crowd/stop_crowd.sh
+
+[Install] 
+WantedBy=multi-user.target 
