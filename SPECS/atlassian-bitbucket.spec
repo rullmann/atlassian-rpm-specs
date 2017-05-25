@@ -35,9 +35,6 @@ cp -R * %{buildroot}/%{bitbucket_home}/
 rm -f %{buildroot}/%{bitbucket_home}/bin/*.bat
 rm -f %{buildroot}/%{bitbucket_home}/bin/*.exe
 
-# Remove the 'safeToDelete.tmp'
-rm -f %{buildroot}/%{bitbucket_home}/temp/safeToDelete.tmp
-
 # Remove useless doc files
 rm -rf %{buildroot}/%{bitbucket_home}/licenses
 rm -f %{buildroot}/%{bitbucket_home}/README.txt
