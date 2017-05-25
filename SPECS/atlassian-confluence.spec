@@ -33,7 +33,7 @@ install -d -m 755 %{buildroot}/%{confluence_home}/
 install -d -m 755 %{buildroot}/%{confluence_user_home}/
 cp -R * %{buildroot}/%{confluence_home}/
 
-# Remove windows bat and exe files
+# Remove useless executable files
 rm -f %{buildroot}/%{confluence_home}/bin/*.bat
 rm -f %{buildroot}/%{confluence_home}/bin/*.exe
 rm -f %{buildroot}/%{confluence_home}/bin/*.exe.x64
