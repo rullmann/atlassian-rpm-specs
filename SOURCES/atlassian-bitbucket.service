@@ -1,0 +1,13 @@
+[Unit] 
+Description=Atlassian Bitbucket
+After=network.target
+
+[Service] 
+Type=forking
+User=bitbucket
+PIDFile=/var/opt/bitbucket/log/bitbucket.pid
+ExecStart=/opt/bitbucket/bin/start-bitbucket.sh
+ExecStop=/opt/bitbucket/bin/stop-bitbucket.sh
+
+[Install] 
+WantedBy=multi-user.target 
