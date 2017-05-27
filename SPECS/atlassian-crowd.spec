@@ -57,6 +57,9 @@ install    -m 644 %_sourcedir/%{name}.service %{buildroot}/%{systemd_dir}/%{name
 install -d -m 755 %{buildroot}/%{logrotate_dir}/logrotate.d
 install    -m 644 %_sourcedir/%{name}.logrotate %{buildroot}/%{logrotate_dir}/%{name}.conf
 
+# set data directory
+install    -m 644 %_sourcedir/crowd-init.properties %{buildroot}/%{crowd_home}/crowd-webapp/WEB-INF/classes/crowd-init.properties
+
 %clean
 rm -rf %{buildroot}
 
