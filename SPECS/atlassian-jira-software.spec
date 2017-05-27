@@ -5,12 +5,12 @@
 %define jira_user_home /var/opt/jira
 %define systemd_dir /usr/lib/systemd/system
 %define logrotate_dir /etc/logrotate.d
-%define jira_software_version 7.3.6
+%define jira_version 7.3.6
 %define jira_release 1
 
 Summary:    Atlassian JIRA Software
 Name:       atlassian-jira-software
-Version:    %{jira_software_version}
+Version:    %{jira_version}
 BuildArch:  noarch
 Release:    %{jira_release}
 License:    Apache Software License
