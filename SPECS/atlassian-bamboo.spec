@@ -18,6 +18,7 @@ URL:        https://www.atlassian.com/software/bamboo
 Source0:    atlassian-bamboo-%{version}.tar.gz
 Source1:    %{name}.service
 Source2:    %{name}.logrotate
+Source3:    bamboo-init.properties
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
@@ -53,6 +54,9 @@ install    -m 644 %_sourcedir/%{name}.service %{buildroot}/%{systemd_dir}/%{name
 install -d -m 755 %{buildroot}/%{logrotate_dir}/logrotate.d
 install    -m 644 %_sourcedir/%{name}.logrotate %{buildroot}/%{logrotate_dir}/%{name}.conf
 
+# set data directory
+install    -m 644 %_sourcedir/bamboo-init.properties %{buildroot}/%{bamboo_home}/atlassian-bamboo/WEB-INF/classes/bamboo-init.properties
+
 %clean
 rm -rf %{buildroot}
 
@@ -76,4 +80,3 @@ getent passwd %{bamboo_user} >/dev/null || /usr/sbin/useradd --comment "Atlassia
 
 %post
 /bin/systemctl daemon-reload
-
