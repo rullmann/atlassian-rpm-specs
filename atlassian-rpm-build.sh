@@ -3,7 +3,7 @@
 # Variables
 BUILDDIR="$HOME/rpmbuild"
 RMBUILDDIR=0
-products=( bamboo bitbucket crowd confluence jira-software all)
+products=( bamboo bitbucket crowd confluence jira all)
 
 # Check if running as root
 if [ "$EUID" -eq 0 ] ; then
@@ -24,7 +24,7 @@ Product:
  bitbucket
  crowd
  confluence
- jira-software
+ jira
  all
 
 Options:
