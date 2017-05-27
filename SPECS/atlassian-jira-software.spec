@@ -18,6 +18,7 @@ URL:        https://www.atlassian.com/software/jira
 Source0:    atlassian-jira-software-%{version}.tar.gz
 Source1:    %{name}.service
 Source2:    %{name}.logrotate
+Source3:    jira-application.properties
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
@@ -57,6 +58,9 @@ install    -m 644 %_sourcedir/%{name}.service %{buildroot}/%{systemd_dir}/%{name
 install -d -m 755 %{buildroot}/%{logrotate_dir}/logrotate.d
 install    -m 644 %_sourcedir/%{name}.logrotate %{buildroot}/%{logrotate_dir}/%{name}.conf
 
+# set data directory
+install    -m 644 %_sourcedir/jira-application.properties %{buildroot}/%{jira_home}/atlassian-jira/WEB-INF/classes/jira-application.properties
+
 %clean
 rm -rf %{buildroot}
 
@@ -80,4 +84,3 @@ getent passwd %{jira_user} >/dev/null || /usr/sbin/useradd --comment "Atlassian 
 
 %post
 /bin/systemctl daemon-reload
-
