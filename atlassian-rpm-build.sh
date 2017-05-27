@@ -3,6 +3,7 @@
 # Variables
 BUILDDIR="$HOME/rpmbuild"
 RMBUILDDIR=0
+products=( bamboo bitbucket crowd confluence jira-software all)
 
 # Check if running as root
 if [ "$EUID" -eq 0 ] ; then
@@ -22,7 +23,7 @@ Product:
  bitbucket
  crowd
  confluence
- jira
+ jira-software
  all
 
 Options:
@@ -54,6 +55,11 @@ function get_repo {
     git clone https://github.com/rullmann/atlassian-rpm-specs.git $HOME/rpmbuild
 }
 
+valid_product () {
+  local p
+  for p in "${@:2}"; do [[ "$p" == "$1" ]] && return 0; done
+}
+
 # Get args and update variables
 while getopts p:h,f opt ; do
     case "${opt}"
@@ -64,13 +70,17 @@ while getopts p:h,f opt ; do
     esac
 done
 
-echo $BUILDDIR
-
-
 if [ -d $BUILDDIR ] ; then
     if [ $RMBUILDDIR -eq 1 ] ; then
         rm -rf $BUILDDIR
     else
         cleanup_env_question
     fi
+fi
+
+if valid_product "$PRODUCT" "${products[@]}" ; then
+    echo -e "###\n\nReady to download and build the rpm files. Please wait.\n\n###\n"
+else
+    echo -e "###\n\nNo valid product chosen! Please read the usage information below!\n\n###\n"
+    print_usage
 fi
