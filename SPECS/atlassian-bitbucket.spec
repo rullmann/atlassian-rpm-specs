@@ -58,6 +58,7 @@ getent passwd %{bitbucket_user} >/dev/null || /usr/sbin/useradd --comment "Atlas
 %defattr(-,root,root)
 %{bitbucket_user_home}
 %{bitbucket_home}
+%dir %attr(0775,%{bitbucket_user},%{jbitbucket_group}) %{bitbucket_user_home}
 %{systemd_dir}/%{name}.service
 %defattr(-,root,%{bitbucket_group})
 
