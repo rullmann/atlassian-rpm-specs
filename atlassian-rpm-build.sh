@@ -1,9 +1,12 @@
 #!/bin/bash
 
+set -e
+
 # Variables
 BUILDDIR="$HOME/rpmbuild"
 RMBUILDDIR=0
-products=( bamboo bitbucket crowd confluence jira all)
+BUILDALL=0
+products=(bamboo bitbucket crowd confluence jira)
 
 # Check if running as root
 if [ "$EUID" -eq 0 ] ; then
@@ -25,9 +28,9 @@ Product:
  crowd
  confluence
  jira
- all
 
 Options:
+ -a    build all the products
  -f    force removal of ~/rpmbuild without asking
  -h    print this message and exit
 EOF
@@ -63,17 +66,29 @@ valid_product () {
     for p in "${@:2}"; do [[ "$p" == "$1" ]] && return 0; done
 }
 
+# Get teh currently defined version in the spec file for a given product
 get_version () {
     grep "%define ${PRODUCT}_version" $BUILDDIR/SPECS/atlassian-$PRODUCT.spec | awk '{print $3}'
 }
 
+# Build the download url for a product
+downloadlink_product () {
+    echo "https://www.atlassian.com/software/$PRODUCT/downloads/binary/atlassian-$PRODUCT-$VERSION.tar.gz"
+}
+
+# Build a given product
+build_product () {
+    rpmbuild -bb --quiet $BUILDDIR/SPECS/atlassian-$PRODUCT.spec
+}
+
 # Get args and update variables
-while getopts p:h,f opt ; do
+while getopts p:h,f,a opt ; do
     case "${opt}"
     in
     p) PRODUCT=${OPTARG};;
     h) print_usage ; exit 1 ;;
-    f) RMBUILDDIR=1;;
+    f) RMBUILDDIR=1 ;;
+    a) BUILDALL=1 ;;
     esac
 done
 
@@ -86,22 +101,38 @@ if [ -d $BUILDDIR ] ; then
     fi
 fi
 
-# Verify that the given product is valid. Exit if not.
-if valid_product "$PRODUCT" "${products[@]}" ; then
-    echo -e "###\n\nReady to download and build the rpm files. Please wait.\n\n###\n"
-else
-    echo -e "###\n\nNo valid product chosen! Please read the usage information below!\n\n###\n"
-    print_usage
-    exit 1
-fi
-
 # Grab the latest spec files with git
-echo -e "\nCloning the repository\n\n###\n"
+echo -e "\n###\n\nCloning the repository\n\n###\n"
 get_repo
 
-if [ $PRODUCT = "all" ] ; then
+# Check if the -a argument has been used
+if [ $BUILDALL -eq 1 ] ; then
+    echo "all"
     exit 0
+# if not proceed with a single product
 else
-    VERSION=$(get_version $PRODUCT)
-    echo $VERSION
+    # Verify that the given product is valid. Exit if not.
+    if valid_product "$PRODUCT" "${products[@]}" ; then
+        VERSION=$(get_version $PRODUCT)
+        # Download and build it ;)
+        echo -e "\n###\n\nReady to download and build the rpm file for $PRODUCT. Please wait.\n\n###\n"
+        # JIRA is a special snowflake when it comes to the download link
+        if [ $PRODUCT = "jira" ]; then
+            wget https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-$VERSION.tar.gz -P $BUILDDIR/SOURCES/
+        else
+            wget $(downloadlink_product $PRODUCT) -P $BUILDDIR/SOURCES/
+        fi
+        # Finally start the build process
+        build_product
+        # Print the filename of the build
+        if [ $PRODUCT = "jira" ]; then
+            echo -e "\n###\n\nYour rpm can be found here: $BUILDDIR/RPMS/noarch/atlassian-$PRODUCT-software-$VERSION-1.noarch.rpm"
+        else
+            echo -e "\n###\n\nYour rpm can be found here: $BUILDDIR/RPMS/noarch/atlassian-$PRODUCT-$VERSION-1.noarch.rpm"
+        fi
+    else
+        echo -e "###\n\nNo valid product chosen! Please read the usage information below!\n\n###\n"
+        print_usage
+        exit 1
+    fi
 fi
