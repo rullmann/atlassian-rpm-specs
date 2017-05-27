@@ -33,7 +33,7 @@ install -d -m 755 %{buildroot}/%{crowd_home}/
 install -d -m 755 %{buildroot}/%{crowd_user_home}/
 cp -R * %{buildroot}/%{crowd_home}/
 
-# Remove windows bat and exe files
+# Remove useless executable files
 rm -f %{buildroot}/%{crowd_home}/*.bat
 rm -f %{buildroot}/%{crowd_home}/apache-tomcat/bin/*.bat
 rm -f %{buildroot}/%{crowd_home}/apache-tomcat/bin/*.exe
@@ -80,4 +80,3 @@ getent passwd %{crowd_user} >/dev/null || /usr/sbin/useradd --comment "Atlassian
 
 %post
 /bin/systemctl daemon-reload
-
