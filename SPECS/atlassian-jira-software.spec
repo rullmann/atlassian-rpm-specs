@@ -33,7 +33,7 @@ install -d -m 755 %{buildroot}/%{jira_home}/
 install -d -m 755 %{buildroot}/%{jira_user_home}/
 cp -R * %{buildroot}/%{jira_home}/
 
-# Remove # Remove useless executable files
+# Remove useless executable files
 rm -f %{buildroot}/%{jira_home}/bin/*.bat
 rm -f %{buildroot}/%{jira_home}/bin/*.exe
 rm -f %{buildroot}/%{jira_home}/bin/*.exe.x64
