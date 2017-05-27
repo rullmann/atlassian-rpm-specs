@@ -22,7 +22,6 @@ You should not make your builds public!
 * Red Hat-based Linux distribution
   * Fedora 25 is highly recommended, as an bug in older versions of rpmbuild prevent building most Java applications
 * `rpmbuild`
-* [Oracle Java](http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html)
 
 Simply clone the repo as some unpriviledged user:
 
