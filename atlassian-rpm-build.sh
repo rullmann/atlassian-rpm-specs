@@ -90,3 +90,13 @@ else
     print_usage
     exit 1
 fi
+
+# Grab the latest spec files with git
+echo -e "\nCloning the repository\n\n###\n"
+get_repo
+
+if [ $PRODUCT = "all" ] ; then
+    exit 0
+else
+    exit 0
+fi
