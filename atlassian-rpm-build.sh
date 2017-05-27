@@ -50,6 +50,10 @@ if [ -z "$1" ] ; then
     exit 1
 fi
 
+function get_repo {
+    git clone https://github.com/rullmann/atlassian-rpm-specs.git $HOME/rpmbuild
+}
+
 # Get args and update variables
 while getopts p:h,f opt ; do
     case "${opt}"
@@ -70,4 +74,3 @@ if [ -d $BUILDDIR ] ; then
         cleanup_env_question
     fi
 fi
-
