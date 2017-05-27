@@ -86,4 +86,3 @@ getent passwd %{confluence_user} >/dev/null || /usr/sbin/useradd --comment "Atla
 
 %post
 /bin/systemctl daemon-reload
-
