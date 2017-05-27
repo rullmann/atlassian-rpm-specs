@@ -11,6 +11,7 @@ if [ "$EUID" -eq 0 ] ; then
     exit 1
 fi
 
+# Function to print the usage information
 function print_usage {
 cat <<-EOF
 atlassian-rpm-build.sh
@@ -51,10 +52,12 @@ if [ -z "$1" ] ; then
     exit 1
 fi
 
+# Function to retrieve the repo
 function get_repo {
     git clone https://github.com/rullmann/atlassian-rpm-specs.git $HOME/rpmbuild
 }
 
+# Function to that the given product is in our products array
 valid_product () {
   local p
   for p in "${@:2}"; do [[ "$p" == "$1" ]] && return 0; done
@@ -70,6 +73,7 @@ while getopts p:h,f opt ; do
     esac
 done
 
+# Remove rpmbuild-dir if it exists
 if [ -d $BUILDDIR ] ; then
     if [ $RMBUILDDIR -eq 1 ] ; then
         rm -rf $BUILDDIR
@@ -78,6 +82,7 @@ if [ -d $BUILDDIR ] ; then
     fi
 fi
 
+# Verify that the given product is valid. Exit if not.
 if valid_product "$PRODUCT" "${products[@]}" ; then
     echo -e "###\n\nReady to download and build the rpm files. Please wait.\n\n###\n"
 else
