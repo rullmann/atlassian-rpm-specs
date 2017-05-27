@@ -17,29 +17,32 @@ Atlassian does not allow public distribution of the software, e.g. as rpm files.
 Therefore it is advised to use this repo and the scripts, which do not contain the software itself, only for internal use.
 You should not make your builds public!
 
+The scripts and spec files provided are not fully tested and may break your existing installation.
+Please keep in mind to test the files before installing on a production anvironment.
+
 # Requirements and usage
 
 * Red Hat-based Linux distribution
   * Fedora 25 is highly recommended, as an bug in older versions of rpmbuild prevent building most Java applications
 * `rpmbuild`
 
-Simply clone the repo as some unpriviledged user:
+To download and view the help:
 
 <pre>
-$ cd ~
-$ git clone https://github.com/rullmann/atlassian-rpm-specs.git rpmbuild
+    curl -fsSL https://github.com/rullmann/atlassian-rpm-specs/raw/master/atlassian-rpm-build.sh | sh -h
 </pre>
 
-* Verify what version you want to build in the appropriate file in the `SPECS`-dir.
-* Download the tar archive from Atlassian and move it to `~/rpmbuild/SOURCES`-dir:
-  * [Confluence](https://www.atlassian.com/software/confluence/download)
-  * [JIRA Software](https://www.atlassian.com/software/jira/download)
-  * [Bamboo](https://www.atlassian.com/software/bamboo/download)
-  * [Bitbucket](https://www.atlassian.com/software/bitbucket/download)
-  * [Crowd](https://www.atlassian.com/software/crowd/download)
-
-After that you can simply build with one of the spec files, e.g. Confluence:
+If you want to download and build the rpm files for all produts directly simple use the `-a` option:
 
 <pre>
-$ rpmbuild -bb rpmbuild/SPECS/atlassian-confluence.spec
+    curl -fsSL https://github.com/rullmann/atlassian-rpm-specs/raw/master/atlassian-rpm-build.sh | sh -a
 </pre>
+
+## Build time
+
+On a machine with 12 Cores, 32 GB RAM and 1 Gbit/s connection it takes approx. 12 minutes to download and build all the packages.
+
+# Installation
+
+The packages can be installed with `dnf` as well as `rpm`.
+You should make sure that Oracle Java is installed and `JRE_HOME` is set.
