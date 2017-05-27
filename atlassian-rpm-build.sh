@@ -1,6 +1,10 @@
 #!/bin/bash
 
-# Check if root
+# Variables
+BUILDDIR="$HOME/rpmbuild"
+RMBUILDDIR=0
+
+# Check if running as root
 if [ "$EUID" -eq 0 ] ; then
     echo -e "###\n\nPlease run as an unpriviledged user to start building!\n\n###"
     exit 1
@@ -28,25 +32,25 @@ EOF
 }
 
 # Clean up environment
-function cleanup_env {
-if [ -d ~/rpmbuild ] ; then
-    echo -e "###\n\nIn order to have a clean build environment\nthis script will remove ~/rpmbuild.\nPlease make sure you have a backup if required.\n\n###\n"
-    read -p "Proceed to remove ~/rpmbuild directory? " -n 1 -r
-    if [[ $REPLY =~ ^[Yy]$ ]]
-    then
-        rm -rf ~/rpmbuild
-    else
-        echo -e "###\n\nCan't proceed without removing ~/rpmbuild. Bye."
-        exit 1
-    fi
+function cleanup_env_question {
+echo -e "###\n\nIn order to have a clean build environment\nthis script will remove ~/rpmbuild.\nPlease make sure you have a backup if required.\n\n###\n"
+read -p "Proceed to remove ~/rpmbuild directory? " -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    rm -rf $BUILDDIR
+else
+    echo -e "###\n\nCan't proceed without removing ~/rpmbuild. Bye."
+    exit 1
 fi
 }
 
+# Verify that there are arguments
 if [ -z "$1" ] ; then
     print_usage
     exit 1
 fi
 
+# Get args and update variables
 while getopts p:h,f opt ; do
     case "${opt}"
     in
@@ -55,4 +59,15 @@ while getopts p:h,f opt ; do
     f) RMBUILDDIR=1;;
     esac
 done
+
+echo $BUILDDIR
+
+
+if [ -d $BUILDDIR ] ; then
+    if [ $RMBUILDDIR -eq 1 ] ; then
+        rm -rf $BUILDDIR
+    else
+        cleanup_env_question
+    fi
+fi
 
