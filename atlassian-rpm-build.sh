@@ -36,7 +36,7 @@ Options:
 EOF
 }
 
-# Clean up environment
+# Function to clean up environment
 function cleanup_env_question {
     echo -e "###\n\nIn order to have a clean build environment\nthis script will remove ~/rpmbuild.\nPlease make sure you have a backup if required.\n\n###\n"
     read -p "Proceed to remove ~/rpmbuild directory? " -n 1 -r
@@ -48,12 +48,6 @@ function cleanup_env_question {
         exit 1
     fi
 }
-
-# Verify that there are arguments
-if [ -z "$1" ] ; then
-    print_usage
-    exit 1
-fi
 
 # Function to retrieve the repo
 function get_repo {
@@ -81,6 +75,38 @@ build_product () {
     rpmbuild -bb --quiet $BUILDDIR/SPECS/atlassian-$PRODUCT.spec
 }
 
+# The actual process of downloading and building a given product and version
+function dl_and_build {
+    echo -e "\n###\n\nReady to download and build the rpm file for $PRODUCT. Please wait.\n\n###\n"
+    # JIRA is a special snowflake when it comes to the download link
+    if [ $PRODUCT = "jira" ]; then
+        wget --quiet https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-$VERSION.tar.gz -P $BUILDDIR/SOURCES/
+    # Bitbucket is an unicorn
+    elif [ $PRODUCT = "bitbucket" ]; then
+        wget --quiet https://www.atlassian.com/software/stash/downloads/binary/atlassian-$PRODUCT-$VERSION.tar.gz -P $BUILDDIR/SOURCES/
+    else
+        wget --quiet $(downloadlink_product $PRODUCT) -P $BUILDDIR/SOURCES/
+    fi
+    # Finally start the build process
+    build_product
+}
+
+# Print the filenames of a build
+function print_rpm_filename {
+    # Print the filename of the build
+    if [ $PRODUCT = "jira" ]; then
+        echo -e "\n###\n\nYour rpm can be found here: $BUILDDIR/RPMS/noarch/atlassian-$PRODUCT-software-$VERSION-1.noarch.rpm"
+    else
+        echo -e "\n###\n\nYour rpm can be found here: $BUILDDIR/RPMS/noarch/atlassian-$PRODUCT-$VERSION-1.noarch.rpm"
+    fi
+}
+
+# Verify that there are arguments
+if [ -z "$1" ] ; then
+    print_usage
+    exit 1
+fi
+
 # Get args and update variables
 while getopts p:h,f,a opt ; do
     case "${opt}"
@@ -107,29 +133,21 @@ get_repo
 
 # Check if the -a argument has been used
 if [ $BUILDALL -eq 1 ] ; then
-    echo "all"
-    exit 0
+    for PRODUCT in "${products[@]}" ; do
+        VERSION=$(get_version $PRODUCT)
+        dl_and_build
+    done
+    for PRODUCT in "${products[@]}" ; do
+        VERSION=$(get_version $PRODUCT)
+        print_rpm_filename
+    done
 # if not proceed with a single product
 else
     # Verify that the given product is valid. Exit if not.
     if valid_product "$PRODUCT" "${products[@]}" ; then
         VERSION=$(get_version $PRODUCT)
-        # Download and build it ;)
-        echo -e "\n###\n\nReady to download and build the rpm file for $PRODUCT. Please wait.\n\n###\n"
-        # JIRA is a special snowflake when it comes to the download link
-        if [ $PRODUCT = "jira" ]; then
-            wget https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-$VERSION.tar.gz -P $BUILDDIR/SOURCES/
-        else
-            wget $(downloadlink_product $PRODUCT) -P $BUILDDIR/SOURCES/
-        fi
-        # Finally start the build process
-        build_product
-        # Print the filename of the build
-        if [ $PRODUCT = "jira" ]; then
-            echo -e "\n###\n\nYour rpm can be found here: $BUILDDIR/RPMS/noarch/atlassian-$PRODUCT-software-$VERSION-1.noarch.rpm"
-        else
-            echo -e "\n###\n\nYour rpm can be found here: $BUILDDIR/RPMS/noarch/atlassian-$PRODUCT-$VERSION-1.noarch.rpm"
-        fi
+        dl_and_build
+        print_rpm_filename
     else
         echo -e "###\n\nNo valid product chosen! Please read the usage information below!\n\n###\n"
         print_usage
