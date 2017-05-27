@@ -31,9 +31,10 @@ install -d -m 755 %{buildroot}/%{bitbucket_home}/
 install -d -m 755 %{buildroot}/%{bitbucket_user_home}/
 cp -R * %{buildroot}/%{bitbucket_home}/
 
-# Remove windows bat and exe files
+# Remove useless executable files
 rm -f %{buildroot}/%{bitbucket_home}/bin/*.bat
 rm -f %{buildroot}/%{bitbucket_home}/bin/*.exe
+rm -rf %{buildroot}/%{bitbucket_home}/lib/native
 
 # Remove useless doc files
 rm -rf %{buildroot}/%{bitbucket_home}/licenses
@@ -58,10 +59,9 @@ getent passwd %{bitbucket_user} >/dev/null || /usr/sbin/useradd --comment "Atlas
 %defattr(-,root,root)
 %{bitbucket_user_home}
 %{bitbucket_home}
-%dir %attr(0775,%{bitbucket_user},%{jbitbucket_group}) %{bitbucket_user_home}
+%dir %attr(0775,%{bitbucket_user},%{bitbucket_group}) %{bitbucket_user_home}
 %{systemd_dir}/%{name}.service
 %defattr(-,root,%{bitbucket_group})
 
 %post
 /bin/systemctl daemon-reload
-
