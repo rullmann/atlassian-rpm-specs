@@ -43,6 +43,7 @@ rm -f %{buildroot}/%{bamboo_home}/temp/safeToDelete.tmp
 rm -f %{buildroot}/%{bamboo_home}/NOTICE
 rm -f %{buildroot}/%{bamboo_home}/README.*
 rm -rf %{buildroot}/%{bamboo_home}/tomcat-docs
+rm -rf %{buildroot}/%{bamboo_home}/licenses
 
 # systemd service
 install -d -m 755 %{buildroot}/%{systemd_dir}
