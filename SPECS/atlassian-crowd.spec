@@ -37,7 +37,7 @@ cp -R * %{buildroot}/%{crowd_home}/
 rm -f %{buildroot}/%{crowd_home}/*.bat
 rm -f %{buildroot}/%{crowd_home}/apache-tomcat/bin/*.bat
 rm -f %{buildroot}/%{crowd_home}/apache-tomcat/bin/*.exe
-rm -f %{buildroot}/%{crowd-home}/apache-tomcat/bin/*.dll
+rm -f %{buildroot}/%{crowd_home}/apache-tomcat/bin/*.dll
 
 # Remove the 'safeToDelete.tmp'
 rm -f %{buildroot}/%{crowd_home}/apache-tomcat/temp/safeToDelete.tmp
