@@ -35,15 +35,15 @@ EOF
 
 # Clean up environment
 function cleanup_env_question {
-echo -e "###\n\nIn order to have a clean build environment\nthis script will remove ~/rpmbuild.\nPlease make sure you have a backup if required.\n\n###\n"
-read -p "Proceed to remove ~/rpmbuild directory? " -n 1 -r
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    rm -rf $BUILDDIR
-else
-    echo -e "###\n\nCan't proceed without removing ~/rpmbuild. Bye."
-    exit 1
-fi
+    echo -e "###\n\nIn order to have a clean build environment\nthis script will remove ~/rpmbuild.\nPlease make sure you have a backup if required.\n\n###\n"
+    read -p "Proceed to remove ~/rpmbuild directory? " -n 1 -r
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        rm -rf $BUILDDIR
+    else
+        echo -e "###\n\nCan't proceed without removing ~/rpmbuild. Bye."
+        exit 1
+    fi
 }
 
 # Verify that there are arguments
@@ -54,13 +54,17 @@ fi
 
 # Function to retrieve the repo
 function get_repo {
-    git clone https://github.com/rullmann/atlassian-rpm-specs.git $HOME/rpmbuild
+    git clone https://github.com/rullmann/atlassian-rpm-specs.git $BUILDDIR
 }
 
 # Function to that the given product is in our products array
 valid_product () {
-  local p
-  for p in "${@:2}"; do [[ "$p" == "$1" ]] && return 0; done
+    local p
+    for p in "${@:2}"; do [[ "$p" == "$1" ]] && return 0; done
+}
+
+get_version () {
+    grep "%define ${PRODUCT}_version" $BUILDDIR/SPECS/atlassian-$PRODUCT.spec | awk '{print $3}'
 }
 
 # Get args and update variables
@@ -98,5 +102,6 @@ get_repo
 if [ $PRODUCT = "all" ] ; then
     exit 0
 else
-    exit 0
+    VERSION=$(get_version $PRODUCT)
+    echo $VERSION
 fi
