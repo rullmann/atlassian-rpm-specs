@@ -95,9 +95,9 @@ function dl_and_build {
 function print_rpm_filename {
     # Print the filename of the build
     if [ $PRODUCT = "jira" ]; then
-        echo -e "\n###\n\nYour rpm can be found here: $BUILDDIR/RPMS/noarch/atlassian-$PRODUCT-software-$VERSION-1.noarch.rpm"
+        echo -e "\nYour rpm file for $PRODUCT can be found here: $BUILDDIR/RPMS/noarch/atlassian-$PRODUCT-software-$VERSION-1.noarch.rpm"
     else
-        echo -e "\n###\n\nYour rpm can be found here: $BUILDDIR/RPMS/noarch/atlassian-$PRODUCT-$VERSION-1.noarch.rpm"
+        echo -e "\n###\n\nYour rpm for $PRODUCT can be found here: $BUILDDIR/RPMS/noarch/atlassian-$PRODUCT-$VERSION-1.noarch.rpm"
     fi
 }
 
