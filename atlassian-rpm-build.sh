@@ -83,4 +83,5 @@ if valid_product "$PRODUCT" "${products[@]}" ; then
 else
     echo -e "###\n\nNo valid product chosen! Please read the usage information below!\n\n###\n"
     print_usage
+    exit 1
 fi
