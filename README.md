@@ -1,4 +1,4 @@
-# atlassian-rpm-specs - Build your own rpm packages for Atlassian products
+# atlassian-rpm-specs - Build your own rpm packages of Atlassian products
 
 [Atlassian](https://www.atlassian.com/) is offering some great tools for team collaboration and developers.
 The installation can be done from an installer or an archive.
