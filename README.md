@@ -29,7 +29,7 @@ Please keep in mind to test the files before installing on a production anvironm
 To download and view the help:
 
 <pre>
-curl -fsSL https://github.com/rullmann/atlassian-rpm-specs/raw/master/atlassian-rpm-build.sh | sh -h
+curl -fsSL https://github.com/rullmann/atlassian-rpm-specs/raw/master/atlassian-rpm-build.sh | bash -s -- -h
 </pre>
 
 If you want to download and build the rpm files for all produts directly simple use the `-a` option:
