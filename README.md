@@ -35,7 +35,7 @@ To download and view the help:
 If you want to download and build the rpm files for all produts directly simple use the `-a` option:
 
 <pre>
-    curl -fsSL https://github.com/rullmann/atlassian-rpm-specs/raw/master/atlassian-rpm-build.sh | sh -a
+    curl -fsSL https://github.com/rullmann/atlassian-rpm-specs/raw/master/atlassian-rpm-build.sh | bash -s -- -a
 </pre>
 
 ## Build time
