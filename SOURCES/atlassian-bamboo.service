@@ -8,6 +8,7 @@ User=bamboo
 PIDFile=/opt/bamboo/work/catalina.pid
 ExecStart=/opt/bamboo/bin/start-bamboo.sh
 ExecStop=/opt/bamboo/bin/stop-bamboo.sh
+Environment=CATALINA_PID=/opt/bamboo/work/catalina.pid
 
 [Install] 
 WantedBy=multi-user.target 
