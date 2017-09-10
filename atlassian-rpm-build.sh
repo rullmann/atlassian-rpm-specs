@@ -20,7 +20,13 @@ cat <<-EOF
 atlassian-rpm-build.sh
 Build your own rpm packages of Atlassian products
 
-Usage: ./atlassian-rpm-build.sh [product] [options]
+Usage: ./atlassian-rpm-build.sh [options]
+
+Options:
+ -p    build a specific product. options below
+ -a    build all the products
+ -f    force removal of ~/rpmbuild without asking
+ -h    print this message and exit
 
 Product:
  bamboo
@@ -28,11 +34,6 @@ Product:
  crowd
  confluence
  jira
-
-Options:
- -a    build all the products
- -f    force removal of ~/rpmbuild without asking
- -h    print this message and exit
 EOF
 }
 
