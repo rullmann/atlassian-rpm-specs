@@ -5,4 +5,5 @@
     copytruncate
     compress
     notifempty
+    su crowd crowd
 }
