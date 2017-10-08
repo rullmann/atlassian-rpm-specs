@@ -46,6 +46,9 @@ rm -f %{buildroot}/%{bamboo_home}/README.*
 rm -rf %{buildroot}/%{bamboo_home}/tomcat-docs
 rm -rf %{buildroot}/%{bamboo_home}/licenses
 
+# Remove Apache maven as it's not required
+rm -rf %{buildroot}/%{bamboo_home}/tools/apache-maven-3.5.0
+
 # systemd service
 install -d -m 755 %{buildroot}/%{systemd_dir}
 install    -m 644 %_sourcedir/%{name}.service %{buildroot}/%{systemd_dir}/%{name}.service
