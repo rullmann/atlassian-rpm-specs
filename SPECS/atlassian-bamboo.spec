@@ -5,7 +5,7 @@
 %define bamboo_user_home /var/opt/bamboo
 %define systemd_dir /usr/lib/systemd/system
 %define logrotate_dir /etc/logrotate.d
-%define bamboo_version 6.2.2
+%define bamboo_version 6.3.2
 %define bamboo_release 1
 
 Summary:    Atlassian Bamboo

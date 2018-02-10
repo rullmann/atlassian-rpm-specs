@@ -5,7 +5,7 @@
 %define crowd_user_home /var/opt/crowd
 %define systemd_dir /usr/lib/systemd/system
 %define logrotate_dir /etc/logrotate.d
-%define crowd_version 3.0.1
+%define crowd_version 3.1.2
 %define crowd_release 1
 
 Summary:    Atlassian Crowd
