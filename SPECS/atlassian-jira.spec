@@ -5,7 +5,7 @@
 %define jira_user_home /var/opt/jira
 %define systemd_dir /usr/lib/systemd/system
 %define logrotate_dir /etc/logrotate.d
-%define jira_version 7.13.1
+%define jira_version 8.5.1
 %define jira_release 1
 
 Summary:    Atlassian JIRA Software

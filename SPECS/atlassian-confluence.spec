@@ -5,7 +5,7 @@
 %define confluence_user_home /var/opt/confluence
 %define systemd_dir /usr/lib/systemd/system
 %define logrotate_dir /etc/logrotate.d
-%define confluence_version 6.15.2
+%define confluence_version 7.1.0
 %define confluence_release 1
 
 Summary:    Atlassian Confluence
