@@ -4,7 +4,7 @@
 %define bitbucket_home /opt/bitbucket
 %define bitbucket_user_home /var/opt/bitbucket
 %define systemd_dir /usr/lib/systemd/system
-%define bitbucket_version 6.8.0
+%define bitbucket_version 7.5.0
 %define bitbucket_release 1
 
 Summary:    Atlassian Bitbucket
